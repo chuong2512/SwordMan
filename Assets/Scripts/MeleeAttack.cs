@@ -2,6 +2,8 @@ using MoreMountains.CorgiEngine;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
+using Assets.HeroEditor4D.Common.Scripts.Enums;
 using UnityEngine;
 
 public class MeleeAttack : MonoBehaviour
@@ -19,7 +21,7 @@ public class MeleeAttack : MonoBehaviour
     [HideInInspector]
     public bool canMeleeAttack;
 
-    public Animator animator;
+    public AnimationManager animManager;
 
     protected GameObject _damageArea;
 
@@ -101,7 +103,7 @@ public class MeleeAttack : MonoBehaviour
         canMeleeAttack = false;
         DisableDamageArea();
         WeaponUse();
-        animator.SetBool("Attack", true);
+        animManager.Slash2H();
         StopAttack();
     }
 
@@ -113,8 +115,7 @@ public class MeleeAttack : MonoBehaviour
     IEnumerator StopAttackIE()
     {
         yield return new WaitForSeconds(attackDuration);
-        animator.SetBool("Attack", false);
-        animator.SetBool("Idle", true);
+        animManager.SetState(CharacterState.Idle);
     }
 
     protected void WeaponUse()

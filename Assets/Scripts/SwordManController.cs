@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
+using Assets.HeroEditor4D.Common.Scripts.Enums;
 using UnityEngine;
 using MoreMountains.CorgiEngine;
 using MoreMountains.Tools;
+using Character = MoreMountains.CorgiEngine.Character;
 
 public class SwordManController : MonoBehaviour
 {
@@ -10,7 +13,7 @@ public class SwordManController : MonoBehaviour
 
     public CorgiController _corgiController;
 
-    public Animator animator;
+    public AnimationManager animManager;
 
     protected InputManager _inputManager;
 
@@ -46,33 +49,40 @@ public class SwordManController : MonoBehaviour
 
     void UpdateAnimations()
     {
-        animator.SetFloat("ySpeed", _corgiController.Speed.y);
+        /*animator.SetFloat("ySpeed", _corgiController.Speed.y);*/
         if (_character.MovementState.CurrentState == CharacterStates.MovementStates.Idle)
         {
-            animator.SetBool("Walking", false);
+            /*animator.SetBool("Walking", false);
             animator.SetBool("Grounded", true);
-            animator.SetBool("Idle", true);
+            animator.SetBool("Idle", true);*/
+            animManager.SetState(CharacterState.Idle);
         }
 
         if (_character.MovementState.CurrentState == CharacterStates.MovementStates.Walking)
         {
-            animator.SetBool("Walking", true);
+            /*animator.SetBool("Walking", true);
             animator.SetBool("Grounded", true);
-            animator.SetBool("Idle", false);
+            animator.SetBool("Idle", false);*/
+            animManager.SetState(CharacterState.Walk);
         }
 
         if (_character.MovementState.CurrentState == CharacterStates.MovementStates.Jumping)
         {
-            animator.SetBool("Walking", false);
+            /*animator.SetBool("Walking", false);
             animator.SetBool("Idle", false);
-            animator.SetBool("Grounded", false);
+            animator.SetBool("Grounded", false);*/
+            animManager.SetState(CharacterState.Jump);
         }
 
         if (_character.MovementState.CurrentState == CharacterStates.MovementStates.Falling)
         {
+            /*
             animator.SetBool("Walking", false);
             animator.SetBool("Idle", false);
             animator.SetBool("Grounded", false);
+            */
+            
+            animManager.SetState(CharacterState.Ready);
         }
     }
 }
